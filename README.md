@@ -33,6 +33,8 @@ import argparse
 # Outputs
 The data are written to a sqlite file with the same name as the input file with the .json extension replaced by .db.
 
+**A database version of the current version v1.1-2022-06-16-ror-data.db can be created using the command: python ROR2DB.py -if v1.1-2022-06-16-ror-data.json**
+
 # Database Structure
 The table structure is similar to the structure provided by Digital Science for the GRID data:
 
