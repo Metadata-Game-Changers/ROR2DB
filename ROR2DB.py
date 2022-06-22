@@ -3,7 +3,6 @@ import pandas as pd
 import sqlite3
 import logging
 import argparse
-import datetime
 
 '''
     Read a json dump of the ROR data and convert it to relational tables in sqlite.
@@ -53,7 +52,9 @@ def cleanup(c):
     '''
         cleanup column names
     '''
-    cleanup = [ 
+    cleanup = [
+        "ALTER TABLE ror RENAME COLUMN 'country.country_name' TO 'country';",
+        "ALTER TABLE ror RENAME COLUMN 'country.country_code' TO 'country_code';",
         "ALTER TABLE acronyms RENAME COLUMN '0'  TO 'acronym';",
         "ALTER TABLE aliases RENAME COLUMN '0'  TO 'alias';",
         "ALTER TABLE email_address RENAME COLUMN 'id' TO 'ror_id';",
@@ -103,14 +104,14 @@ lggr = logging.getLogger('ROR2DB')
 # a structure of ror and some other simple fields
 #
 simpleTableFields = {
-    'ror': ['id', 'name'],
+    'ror': ['id', 'name', 'country.country_name', 'country.country_code', 'status'],
     'institutes': ['id','name','wikipedia_url','established'],
     'email_address': ['id', 'email_address']
 }
 #
 # list fields are converted to lookup tables with ror_id and value
 # 
-lookupFields = ['acronyms', 'aliases', 'links', 'relationships', 'addresses', 'labels', 'types']
+lookupFields = ['acronyms', 'addresses', 'aliases', 'links', 'relationships', 'labels', 'types']
 idFields = ['relationships']
 unknowns = ['external_ids']
 
